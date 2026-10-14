@@ -13,7 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -29,6 +28,13 @@ jobs:
         with:
           gradle-version: "8.7"
 
+      - name: Check project files
+        run: |
+          echo "Isi folder utama:"
+          ls -la
+          echo "Mencari file konfigurasi Gradle:"
+          find . -maxdepth 3 \( -name "settings.gradle" -o -name "settings.gradle.kts" -o -name "build.gradle" -o -name "build.gradle.kts" \)
+
       - name: Build debug APK
         run: gradle assembleDebug
 
@@ -38,6 +44,7 @@ jobs:
           name: SZEELL-RW-APK
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
 
 
       
